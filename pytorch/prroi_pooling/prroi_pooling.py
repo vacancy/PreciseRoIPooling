@@ -9,3 +9,21 @@
 # Distributed under terms of the MIT license.
 # Copyright (c) 2017 Megvii Technology Limited.
 
+import torch.nn as nn
+
+from .functional import prroi_pooling2d
+
+__all__ = ['PrRoIPooling2D']
+
+
+class PrRoIPooling2D(nn.Module):
+    def __init__(self, pooled_height, pooled_width, spatial_scale):
+        super().__init__()
+
+        self.pooled_width = int(pooled_width)
+        self.pooled_height = int(pooled_height)
+        self.spatial_scale = float(spatial_scale)
+
+    def forward(self, features, rois):
+        return prroi_pooling2d(features, rois)
+
