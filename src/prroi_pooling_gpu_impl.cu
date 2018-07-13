@@ -7,7 +7,7 @@
  * Copyright (c) 2017 Megvii Technology Limited.
  */
 
-#include "prroi_pooling_impl_gpu.cuh"
+#include "prroi_pooling_gpu_impl.cuh"
 
 #include <cstdio>
 #include <cfloat>
@@ -24,12 +24,11 @@
             fprintf(stderr, "cudaCheckError() failed : %s\n", cudaGetErrorString(err)); \
             exit(-1); \
         } \
-    while(0)
-
-#define F_DEVPTR_IN const float * 
-#define F_DEVPTR_OUT float * 
+    } while(0)
 
 #define CUDA_NUM_THREADS 512
+
+namespace {
 
 static int CUDA_NUM_BLOCKS(const int N) {
   return (N + CUDA_NUM_THREADS - 1) / CUDA_NUM_THREADS;
@@ -379,7 +378,11 @@ __global__ void PrRoIPoolingCoorBackward(
   }
 }
 
-extern "C"{
+} /* !anonymous namespace */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void PrRoIPoolingForwardGpu(
     cudaStream_t stream,
