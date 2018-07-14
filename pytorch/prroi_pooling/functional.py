@@ -15,7 +15,7 @@ import torch.autograd as ag
 try:
     from . import _prroi_pooling
 except ImportError:
-    raise ImportError('Can not found the compiled Precise RoI Pooling library. Run ./travis.sh in the directory first')
+    raise ImportError('Can not found the compiled Precise RoI Pooling library. Run ./travis.sh in the directory first.')
 
 __all__ = ['prroi_pooling2d']
 
