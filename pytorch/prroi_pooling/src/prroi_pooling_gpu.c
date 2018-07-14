@@ -67,14 +67,14 @@ int prroi_pooling_backward_cuda(
 }
 
 int prroi_pooling_coor_backward_cuda(
-    THCudaTensor *features, THCudaTensor *rois, THCudaTensor *output, THCudaTensor *output_diff, THCudaTensor *features_diff,
+    THCudaTensor *features, THCudaTensor *rois, THCudaTensor *output, THCudaTensor *output_diff, THCudaTensor *coor_diff,
     int pooled_height, int pooled_width, float spatial_scale) {
 
     const float *data_ptr = THCudaTensor_data(state, features);
     const float *rois_ptr = THCudaTensor_data(state, rois);
     const float *output_ptr = THCudaTensor_data(state, output);
     const float *output_diff_ptr = THCudaTensor_data(state, output_diff);
-    float *features_diff_ptr = THCudaTensor_data(state, features_diff);
+    float *coor_diff_ptr= THCudaTensor_data(state, coor_diff);
 
     int nr_rois = THCudaTensor_size(state, rois, 0);
     int nr_channels = THCudaTensor_size(state, features, 1);
@@ -86,7 +86,7 @@ int prroi_pooling_coor_backward_cuda(
     cudaStream_t stream = THCState_getCurrentStream(state);
 
     PrRoIPoolingCoorBackwardGpu(
-        stream, data_ptr, rois_ptr, output_ptr, output_diff_ptr, features_diff_ptr,
+        stream, data_ptr, rois_ptr, output_ptr, output_diff_ptr, coor_diff_ptr,
         nr_channels, height, width, pooled_height, pooled_width, spatial_scale,
         top_count, bottom_count
     );

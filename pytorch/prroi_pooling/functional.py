@@ -36,7 +36,7 @@ class PrRoIPooling2DFunction(ag.Function):
         )
 
         if features.is_cuda:
-            output = _prroi_pooling.roi_pooling_forward_cuda(features, rois, output, *params)
+            _prroi_pooling.prroi_pooling_forward_cuda(features, rois, output, *params)
             ctx.params = params
             ctx.save_for_backward(features, rois, output)
         else:
@@ -47,11 +47,16 @@ class PrRoIPooling2DFunction(ag.Function):
     @staticmethod
     def backward(ctx, grad_output):
         features, rois, output = ctx.saved_tensors
+        grad_input = grad_coor = None
 
-        grad_input = torch.zeros_like(features)
-        grad_coor = torch.zeros_like(rois)
-        _prroi_pooling.roi_pooling_backward_cuda(features, rois, output, grad_output, grad_input, *ctx.params)
-        _prroi_pooling.roi_pooling_coor_backward_cuda(features, rois, output, grad_output, grad_coor, *ctx.params)
+        if features.requires_grad:
+            grad_output = grad_output.contiguous()
+            grad_input = torch.zeros_like(features)
+            _prroi_pooling.prroi_pooling_backward_cuda(features, rois, output, grad_output, grad_input, *ctx.params)
+        if rois.requires_grad:
+            grad_output = grad_output.contiguous()
+            grad_coor = torch.zeros_like(rois)
+            _prroi_pooling.prroi_pooling_coor_backward_cuda(features, rois, output, grad_output, grad_coor, *ctx.params)
 
         return grad_input, grad_coor, None, None, None
 

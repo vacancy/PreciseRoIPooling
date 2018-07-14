@@ -172,7 +172,7 @@ __global__ void PrRoIPoolingForward(
     float roi_start_h = bottom_rois[2] * spatial_scale;
     float roi_end_w = bottom_rois[3] * spatial_scale;
     float roi_end_h = bottom_rois[4] * spatial_scale;
-    
+
     float roi_width = max(roi_end_w - roi_start_w, ((float)0.0));
     float roi_height = max(roi_end_h - roi_start_h, ((float)0.0));
     float bin_size_h = roi_height / static_cast<float>(pooled_height);
@@ -229,7 +229,7 @@ __global__ void PrRoIPoolingBackward(
     int ph = (index / pooled_width) % pooled_height;
     int c = (index / pooled_width / pooled_height) % channels;
     int n = index / pooled_width / pooled_height / channels;
-    bottom_rois += n * 5;
+    bottom_rois += n * 5; 
     
     int roi_batch_ind = bottom_rois[0];
     float roi_start_w = bottom_rois[1] * spatial_scale;
@@ -244,7 +244,7 @@ __global__ void PrRoIPoolingBackward(
 
     const float *this_out_grad = top_diff + index;
     float *this_data_grad = bottom_diff + (roi_batch_ind * channels + c) * height * width;
-    
+
     float win_start_w = roi_start_w + bin_size_w * pw;
     float win_start_h = roi_start_h + bin_size_h * ph;
     float win_end_w = win_start_w + bin_size_w;
@@ -292,13 +292,13 @@ __global__ void PrRoIPoolingCoorBackward(
     int c = (index / pooled_width / pooled_height) % channels;
     int n = index / pooled_width / pooled_height / channels;
     bottom_rois += n * 5;
-    
+
     int roi_batch_ind = bottom_rois[0];
     float roi_start_w = bottom_rois[1] * spatial_scale;
     float roi_start_h = bottom_rois[2] * spatial_scale;
     float roi_end_w = bottom_rois[3] * spatial_scale;
     float roi_end_h = bottom_rois[4] * spatial_scale;
-    
+
     float roi_width = max(roi_end_w - roi_start_w, (float)0);
     float roi_height = max(roi_end_h - roi_start_h, (float)0);
     float bin_size_h = roi_height / static_cast<float>(pooled_height);
