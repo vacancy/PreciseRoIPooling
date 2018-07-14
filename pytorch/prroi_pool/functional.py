@@ -23,6 +23,8 @@ __all__ = ['prroi_pool2d']
 class PrRoIPool2DFunction(ag.Function):
     @staticmethod
     def forward(ctx, features, rois, pooled_height, pooled_width, spatial_scale):
+        features = features.contiguous()
+        rois = rois.contiguous()
         pooled_height = int(pooled_height)
         pooled_width = int(pooled_width)
         spatial_scale = float(spatial_scale)
@@ -38,6 +40,7 @@ class PrRoIPool2DFunction(ag.Function):
         if features.is_cuda:
             _prroi_pooling.prroi_pooling_forward_cuda(features, rois, output, *params)
             ctx.params = params
+            # everything here is contiguous.
             ctx.save_for_backward(features, rois, output)
         else:
             raise NotImplementedError('Precise RoI Pooling only supports GPU (cuda) implememtations.')
