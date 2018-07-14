@@ -1,7 +1,7 @@
 # PreciseRoIPooling
 This repo implements the **Precise RoI Pooling** (PrRoI Pooling) described in paper **Acquisition of Localization Confidence for Accurate Object Detection** published at ECCV 2018.
 
-**Note**: The paper will be make public soon.
+**Note**: The paper will be made public soon.
 
 In short, Precise RoI Pooling is an integration-based (bilinear interpolation) average pooling method for RoI Pooling. It avoids any quantization and has a continuous gradient on bounding box coordinates. It is:
 
@@ -12,7 +12,7 @@ For a better illustration, we illustrate RoI Pooling, RoI Align and PrRoI Pooing
 
 ## Implementation
 
-PrRoI Pooling was originally implemented by [Tete Xiao](http://tetexiao.com/) based on MegBrain, an (internal) deep learning framework built by Megvii Inc. It was later adapted into open-source deep learning frameworks. Currently, we only support PyTorch. Unfortunately we don't have any specific plan for the adaptation into other frameworks such as TensorFlow, but any contributions (pull requests) will be more than welcomed.
+PrRoI Pooling was originally implemented by [Tete Xiao](http://tetexiao.com/) based on MegBrain, an (internal) deep learning framework built by Megvii Inc. It was later adapted into open-source deep learning frameworks. Currently, we only support PyTorch. Unfortunately, we don't have any specific plan for the adaptation into other frameworks such as TensorFlow, but any contributions (pull requests) will be more than welcome.
 
 ## Usage (PyTorch)
 
@@ -32,5 +32,5 @@ roi_features = prroi_pool2d(features, rois, window_height, window_width, spatial
 
 Here,
 
-- RoI is an `m * 5` float tensor of format `(batch_index, x0, y0, x1, y1)`, following the convension in the original Caffe implementation of RoI Pooling, although in some frameworks the batch indices are provided by a integer tensor.
+- RoI is an `m * 5` float tensor of format `(batch_index, x0, y0, x1, y1)`, following the convention in the original Caffe implementation of RoI Pooling, although in some frameworks the batch indices are provided by an integer tensor.
 - `spatial_scale` is multiplied to the RoIs. For example, if your feature maps are down-sampled by a factor of 16 (w.r.t. the input image), you should use a spatial scale of `1/16`.
