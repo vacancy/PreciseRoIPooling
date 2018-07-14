@@ -17,10 +17,10 @@ try:
 except ImportError:
     raise ImportError('Can not found the compiled Precise RoI Pooling library. Run ./travis.sh in the directory first.')
 
-__all__ = ['prroi_pooling2d']
+__all__ = ['prroi_pool2d']
 
 
-class PrRoIPooling2DFunction(ag.Function):
+class PrRoIPool2DFunction(ag.Function):
     @staticmethod
     def forward(ctx, features, rois, pooled_height, pooled_width, spatial_scale):
         pooled_height = int(pooled_height)
@@ -61,5 +61,5 @@ class PrRoIPooling2DFunction(ag.Function):
         return grad_input, grad_coor, None, None, None
 
 
-prroi_pooling2d = PrRoIPooling2DFunction.apply
+prroi_pool2d = PrRoIPool2DFunction.apply
 

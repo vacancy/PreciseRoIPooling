@@ -14,12 +14,12 @@ import torch.nn.functional as F
 
 from jactorch.utils.unittest import TorchTestCase
 
-from prroi_pooling import PrRoIPooling2D
+from prroi_pool import PrRoIPool2D
 
 
-class TestPrRoIPooling2D(TorchTestCase):
+class TestPrRoIPool2D(TorchTestCase):
     def test_forward(self):
-        pool = PrRoIPooling2D(7, 7, spatial_scale=0.5)
+        pool = PrRoIPool2D(7, 7, spatial_scale=0.5)
         features = torch.rand((4, 16, 24, 32)).cuda()
         rois = torch.tensor([
             [0, 0, 0, 14, 14],
@@ -35,7 +35,7 @@ class TestPrRoIPooling2D(TorchTestCase):
         ), dim=0))
 
     def test_backward_shapeonly(self):
-        pool = PrRoIPooling2D(2, 2, spatial_scale=0.5)
+        pool = PrRoIPool2D(2, 2, spatial_scale=0.5)
 
         features = torch.rand((4, 2, 24, 32)).cuda()
         rois = torch.tensor([

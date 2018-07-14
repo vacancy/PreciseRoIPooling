@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-# File   : prroi_pooling.py
+# File   : prroi_pool.py
 # Author : Jiayuan Mao, Tete Xiao
 # Email  : maojiayuan@gmail.com, jasonhsiao97@gmail.com
 # Date   : 07/13/2018
@@ -11,12 +11,12 @@
 
 import torch.nn as nn
 
-from .functional import prroi_pooling2d
+from .functional import prroi_pool2d
 
-__all__ = ['PrRoIPooling2D']
+__all__ = ['PrRoIPool2D']
 
 
-class PrRoIPooling2D(nn.Module):
+class PrRoIPool2D(nn.Module):
     def __init__(self, pooled_height, pooled_width, spatial_scale):
         super().__init__()
 
@@ -25,5 +25,4 @@ class PrRoIPooling2D(nn.Module):
         self.spatial_scale = float(spatial_scale)
 
     def forward(self, features, rois):
-        return prroi_pooling2d(features, rois, self.pooled_height, self.pooled_width, self.spatial_scale)
-
+        return prroi_pool2d(features, rois, self.pooled_height, self.pooled_width, self.spatial_scale)
