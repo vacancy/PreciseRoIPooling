@@ -10,6 +10,8 @@ In short, Precise RoI Pooling is an integration-based (bilinear interpolation) a
 
 For a better illustration, we illustrate RoI Pooling, RoI Align and PrRoI Pooing in the following figure. More details including the gradient computation can be found in our paper.
 
+<center><img src="./_assets/prroi_visualization.png" width="80%"></center>
+
 ## Implementation
 
 PrRoI Pooling was originally implemented by [Tete Xiao](http://tetexiao.com/) based on MegBrain, an (internal) deep learning framework built by Megvii Inc. It was later adapted into open-source deep learning frameworks. Currently, we only support PyTorch. Unfortunately, we don't have any specific plan for the adaptation into other frameworks such as TensorFlow, but any contributions (pull requests) will be more than welcome.
