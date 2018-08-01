@@ -1,7 +1,13 @@
 # PreciseRoIPooling
-This repo implements the **Precise RoI Pooling** (PrRoI Pooling) described in paper **Acquisition of Localization Confidence for Accurate Object Detection** published at ECCV 2018.
+This repo implements the **Precise RoI Pooling** (PrRoI Pooling), proposed in the paper **Acquisition of Localization Confidence for Accurate Object Detection** published at ECCV 2018 (Oral Presentation).
 
-**Note**: The paper will be made public soon.
+**Acquisition of Localization Confidence for Accurate Object Detection**
+
+_Borui Jiang*, Ruixuan Luo*, Jiayuan Mao*, Tete Xiao, Yuning Jiang_ (* indicates equal contribution.)
+
+https://arxiv.org/abs/1807.11590
+
+## Brief
 
 In short, Precise RoI Pooling is an integration-based (bilinear interpolation) average pooling method for RoI Pooling. It avoids any quantization and has a continuous gradient on bounding box coordinates. It is:
 
