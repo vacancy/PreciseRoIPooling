@@ -4,7 +4,7 @@
 # Author : Jiayuan Mao, Tete Xiao
 # Email  : maojiayuan@gmail.com, jasonhsiao97@gmail.com
 # Date   : 07/13/2018
-# 
+#
 # This file is part of PreciseRoIPooling.
 # Distributed under terms of the MIT license.
 # Copyright (c) 2017 Megvii Technology Limited.
@@ -23,6 +23,9 @@ __all__ = ['prroi_pool2d']
 class PrRoIPool2DFunction(ag.Function):
     @staticmethod
     def forward(ctx, features, rois, pooled_height, pooled_width, spatial_scale):
+        assert 'FloatTensor' in features.type() and 'FloatTensor' in rois.type(), \
+                'Precise RoI Pooling only takes float input, got {} for features and {} for rois.'.format(features.type(), rois.type())
+
         features = features.contiguous()
         rois = rois.contiguous()
         pooled_height = int(pooled_height)
