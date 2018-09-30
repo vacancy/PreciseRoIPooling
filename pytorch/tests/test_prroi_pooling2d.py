@@ -3,7 +3,7 @@
 # Author : Jiayuan Mao
 # Email  : maojiayuan@gmail.com
 # Date   : 18/02/2018
-# 
+#
 # This file is part of Jacinle.
 
 import unittest
