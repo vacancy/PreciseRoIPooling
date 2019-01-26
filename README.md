@@ -22,9 +22,30 @@ For a better illustration, we illustrate RoI Pooling, RoI Align and PrRoI Pooing
 
 PrRoI Pooling was originally implemented by [Tete Xiao](http://tetexiao.com/) based on MegBrain, an (internal) deep learning framework built by Megvii Inc. It was later adapted into open-source deep learning frameworks. Currently, we only support PyTorch. Unfortunately, we don't have any specific plan for the adaptation into other frameworks such as TensorFlow, but any contributions (pull requests) will be more than welcome.
 
-## Usage (PyTorch)
+## Usage (PyTorch 1.0)
 
-In the directory `pytorch/`, we provide a PyTorch-based implementation of PrRoI Pooling. It requires PyTorch 0.4 and only supports CUDA (CPU mode is not implemented). To use the PrRoI Pooling module, first goto `pytorch/prroi_pool` and execute `./travis.sh` to compile the essential components (you may need `nvcc` for this step). To use the module in your code, simply do:
+In the directory `pytorch/`, we provide a PyTorch-based implementation of PrRoI Pooling. It requires PyTorch 1.0+ and only supports CUDA (CPU mode is not implemented).
+Since we use PyTorch JIT for cxx/cuda code compilation, to use the module in your code, simply do:
+
+```
+from prroi_pool import PrRoIPool2D
+
+avg_pool = PrRoIPool2D(window_height, window_width, spatial_scale)
+roi_features = avg_pool(features, rois)
+
+# for those who want to use the "functional"
+
+from prroi_pool.functional import prroi_pool2d
+roi_features = prroi_pool2d(features, rois, window_height, window_width, spatial_scale)
+```
+
+
+## Usage (PyTorch 0.4)
+
+**!!! Please first checkout to the branch pytorch0.4.**
+
+In the directory `pytorch/`, we provide a PyTorch-based implementation of PrRoI Pooling. It requires PyTorch 0.4 and only supports CUDA (CPU mode is not implemented).
+To use the PrRoI Pooling module, first goto `pytorch/prroi_pool` and execute `./travis.sh` to compile the essential components (you may need `nvcc` for this step). To use the module in your code, simply do:
 
 ```
 from prroi_pool import PrRoIPool2D
