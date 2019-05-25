@@ -12,24 +12,37 @@
 import torch
 import torch.autograd as ag
 
-try:
-    from os.path import join as pjoin, dirname
-    from torch.utils.cpp_extension import load as load_extension
-    root_dir = pjoin(dirname(__file__), 'src')
-    _prroi_pooling = load_extension(
-        '_prroi_pooling',
-        [pjoin(root_dir, 'prroi_pooling_gpu.c'), pjoin(root_dir, 'prroi_pooling_gpu_impl.cu')],
-        verbose=True
-    )
-except ImportError:
-    raise ImportError('Can not compile Precise RoI Pooling library.')
-
 __all__ = ['prroi_pool2d']
+
+
+_prroi_pooling = None
+
+
+def _import_prroi_pooling():
+    global _prroi_pooling
+
+    if _prroi_pooling is None:
+        try:
+            from os.path import join as pjoin, dirname
+            from torch.utils.cpp_extension import load as load_extension
+            root_dir = pjoin(dirname(__file__), 'src')
+
+            _prroi_pooling = load_extension(
+                '_prroi_pooling',
+                [pjoin(root_dir, 'prroi_pooling_gpu.c'), pjoin(root_dir, 'prroi_pooling_gpu_impl.cu')],
+                verbose=True
+            )
+        except ImportError:
+            raise ImportError('Can not compile Precise RoI Pooling library.')
+
+    return _prroi_pooling
 
 
 class PrRoIPool2DFunction(ag.Function):
     @staticmethod
     def forward(ctx, features, rois, pooled_height, pooled_width, spatial_scale):
+        _prroi_pooling = _import_prroi_pooling()
+
         assert 'FloatTensor' in features.type() and 'FloatTensor' in rois.type(), \
                 'Precise RoI Pooling only takes float input, got {} for features and {} for rois.'.format(features.type(), rois.type())
 
@@ -53,6 +66,8 @@ class PrRoIPool2DFunction(ag.Function):
 
     @staticmethod
     def backward(ctx, grad_output):
+        _prroi_pooling = _import_prroi_pooling()
+
         features, rois, output = ctx.saved_tensors
         grad_input = grad_coor = None
 

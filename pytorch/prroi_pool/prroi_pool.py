@@ -4,7 +4,7 @@
 # Author : Jiayuan Mao, Tete Xiao
 # Email  : maojiayuan@gmail.com, jasonhsiao97@gmail.com
 # Date   : 07/13/2018
-# 
+#
 # This file is part of PreciseRoIPooling.
 # Distributed under terms of the MIT license.
 # Copyright (c) 2017 Megvii Technology Limited.
@@ -26,3 +26,7 @@ class PrRoIPool2D(nn.Module):
 
     def forward(self, features, rois):
         return prroi_pool2d(features, rois, self.pooled_height, self.pooled_width, self.spatial_scale)
+
+    def extra_repr(self):
+        return 'kernel_size=({pooled_height}, {pooled_width}), spatial_scale={spatial_scale}'.format(**self.__dict__)
+
