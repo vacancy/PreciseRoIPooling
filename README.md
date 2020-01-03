@@ -18,6 +18,8 @@ For a better illustration, we illustrate RoI Pooling, RoI Align and PrRoI Pooing
 
 <center><img src="./_assets/prroi_visualization.png" width="80%"></center>
 
+**Causion**: To install the library, please `git clone` the repository instead of downloading the zip file, since source files inside the folder `./pytorch/prroi_pool/src/` are symbol-linked. Downloading the repository as a zip file will break these symbolic links.
+
 ## Implementation
 
 PrRoI Pooling was originally implemented by [Tete Xiao](http://tetexiao.com/) based on MegBrain, an (internal) deep learning framework built by Megvii Inc. It was later adapted into open-source deep learning frameworks. Currently, we only support PyTorch. Unfortunately, we don't have any specific plan for the adaptation into other frameworks such as TensorFlow, but any contributions (pull requests) will be more than welcome.
@@ -38,7 +40,6 @@ roi_features = avg_pool(features, rois)
 from prroi_pool.functional import prroi_pool2d
 roi_features = prroi_pool2d(features, rois, window_height, window_width, spatial_scale)
 ```
-
 
 ## Usage (PyTorch 0.4)
 
