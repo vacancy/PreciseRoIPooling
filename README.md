@@ -65,3 +65,59 @@ Here,
 - RoI is an `m * 5` float tensor of format `(batch_index, x0, y0, x1, y1)`, following the convention in the original Caffe implementation of RoI Pooling, although in some frameworks the batch indices are provided by an integer tensor.
 - `spatial_scale` is multiplied to the RoIs. For example, if your feature maps are down-sampled by a factor of 16 (w.r.t. the input image), you should use a spatial scale of `1/16`.
 - The coordinates for RoI follows the [L, R) convension. That is, `(0, 0, 4, 4)` denotes a box of size `4x4`.
+
+## Usage (TensorFlow)
+In the directory `tensorflow/`, we provide a TensorFlow-based implementation of PrRoI Pooling. It tested TensorFlow 2.2 and only supports CUDA (CPU mode is not implemented).
+To compile the essential components, follow the instruction below
+
+To use the PrRoI Pooling module, to compile the essential components (you may need `nvcc` for this step). To use the module in your code, simply do:
+### Requirements
+* CUDA compiler(NVCC)
+* Tensorflow-GPU 2.x
+* CMake
+* Microsoft Visual C++ Build Tools(For Windows Users)
+### Step-by-step instructions
+#### For Ubuntu Users
+##### CMake Configuration
+
+```
+mkdir tensorflow/prroi_pool/build
+cd tensorflow/prroi_pool/build
+cmake -DCMAKE_BUILD_TYPE="Release" ..
+```
+#### Build & Test PrRoI Pooling module
+```
+make
+```
+#### For Windows Users
+**!!! Have to copy cuda codes from `src/*` to `tensorflow/prroi_pool/src/external/*` **
+##### MSVC Configuration
+```
+${MSVC_INSTALL_PATH}\VC\Auxiliary\Build\vcvars64.bat
+```
+##### CMake Configuration
+
+```
+mkdir tensorflow/prroi_pool/build
+cd tensorflow/prroi_pool/build
+cmake -DCMAKE_BUILD_TYPE="Release" -G "NMake Makefiles" ..
+```
+##### Build & Test Custom ops
+```
+nmake BUILD=release
+```
+
+To use the module in your code, simply do:
+```
+from prroi_pool import PreciseRoIPooling
+
+avg_pool = PreciseRoIPooling(window_height, window_width, spatial_scale, data_format)
+roi_features = avg_pool([features, rois])
+
+```
+
+Here,
+
+- RoI is an `m * 5` float tensor of format `(batch_index, x0, y0, x1, y1)`, following the convention in the original Caffe implementation of RoI Pooling, although in some frameworks the batch indices are provided by an integer tensor.
+- `spatial_scale` is multiplied to the RoIs. For example, if your feature maps are down-sampled by a factor of 16 (w.r.t. the input image), you should use a spatial scale of `1/16`.
+- The coordinates for RoI follows the [L, R) convension. That is, `(0, 0, 4, 4)` denotes a box of size `4x4`.
