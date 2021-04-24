@@ -7,6 +7,8 @@ _Borui Jiang*, Ruixuan Luo*, Jiayuan Mao*, Tete Xiao, Yuning Jiang_ (* indicates
 
 https://arxiv.org/abs/1807.11590
 
+**Causion**: To install the library, please `git clone` the repository instead of downloading the zip file, since source files inside the folder `./pytorch/prroi_pool/src/` are symbol-linked. Downloading the repository as a zip file will break these symbolic links.
+
 ## Brief
 
 In short, Precise RoI Pooling is an integration-based (bilinear interpolation) average pooling method for RoI Pooling. It avoids any quantization and has a continuous gradient on bounding box coordinates. It is:
@@ -17,8 +19,6 @@ In short, Precise RoI Pooling is an integration-based (bilinear interpolation) a
 For a better illustration, we illustrate RoI Pooling, RoI Align and PrRoI Pooing in the following figure. More details including the gradient computation can be found in our paper.
 
 <center><img src="./_assets/prroi_visualization.png" width="80%"></center>
-
-**Causion**: To install the library, please `git clone` the repository instead of downloading the zip file, since source files inside the folder `./pytorch/prroi_pool/src/` are symbol-linked. Downloading the repository as a zip file will break these symbolic links.
 
 ## Implementation
 
