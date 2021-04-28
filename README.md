@@ -7,7 +7,7 @@ _Borui Jiang*, Ruixuan Luo*, Jiayuan Mao*, Tete Xiao, Yuning Jiang_ (* indicates
 
 https://arxiv.org/abs/1807.11590
 
-**Causion**: To install the library, please `git clone` the repository instead of downloading the zip file, since source files inside the folder `./pytorch/prroi_pool/src/` are symbol-linked. Downloading the repository as a zip file will break these symbolic links.
+**Causion**: To install the library, please `git clone` the repository instead of downloading the zip file, since source files inside the folder `./pytorch/prroi_pool/src/` are symbol-linked. Downloading the repository as a zip file will break these symbolic links. Also, there are reports indicating that Windows git versions also breaks the symbol links. See [issues/58](https://github.com/vacancy/PreciseRoIPooling/issues/58).
 
 ## Brief
 
