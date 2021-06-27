@@ -7,7 +7,7 @@ _Borui Jiang*, Ruixuan Luo*, Jiayuan Mao*, Tete Xiao, Yuning Jiang_ (* indicates
 
 https://arxiv.org/abs/1807.11590
 
-**Causion**: To install the library, please `git clone` the repository instead of downloading the zip file, since source files inside the folder `./pytorch/prroi_pool/src/` are symbol-linked. Downloading the repository as a zip file will break these symbolic links. Also, there are reports indicating that Windows git versions also breaks the symbol links. See [issues/58](https://github.com/vacancy/PreciseRoIPooling/issues/58).
+**Causion**: To install the library, please `git clone` the repository instead of downloading the zip file, since source files inside the folder `./pytorch/prroi_pool/src/` and `tensorflow/prroi_pool/src/kernels/external` are symbol-linked. Downloading the repository as a zip file will break these symbolic links. Also, there are reports indicating that Windows git versions also breaks the symbol links. See [issues/58](https://github.com/vacancy/PreciseRoIPooling/issues/58).
 
 ## Brief
 
@@ -90,7 +90,7 @@ cmake -DCMAKE_BUILD_TYPE="Release" ..
 make
 ```
 #### For Windows Users
-**!!! Have to copy cuda codes from `src/*` to `tensorflow/prroi_pool/src/external/*` **
+
 ##### MSVC Configuration
 ```
 ${MSVC_INSTALL_PATH}\VC\Auxiliary\Build\vcvars64.bat
