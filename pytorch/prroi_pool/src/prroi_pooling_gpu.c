@@ -34,7 +34,7 @@ at::Tensor prroi_pooling_forward_cuda(const at::Tensor &features, const at::Tens
 
     cudaStream_t stream = at::cuda::getCurrentCUDAStream(features.device().index());
     PrRoIPoolingForwardGpu(
-        stream, features.data<float>(), rois.data<float>(), output.data<float>(),
+        stream, features.data_ptr<float>(), rois.data_ptr<float>(), output.data_ptr<float>(),
         nr_channels, height, width, pooled_height, pooled_width, spatial_scale,
         top_count
     );
@@ -65,8 +65,8 @@ at::Tensor prroi_pooling_backward_cuda(
     cudaStream_t stream = at::cuda::getCurrentCUDAStream(features.device().index());
     PrRoIPoolingBackwardGpu(
         stream,
-        features.data<float>(), rois.data<float>(), output.data<float>(), output_diff.data<float>(),
-        features_diff.data<float>(),
+        features.data_ptr<float>(), rois.data_ptr<float>(), output.data_ptr<float>(), output_diff.data_ptr<float>(),
+        features_diff.data_ptr<float>(),
         nr_channels, height, width, pooled_height, pooled_width, spatial_scale,
         top_count, bottom_count
     );
@@ -96,8 +96,8 @@ at::Tensor prroi_pooling_coor_backward_cuda(
     cudaStream_t stream = at::cuda::getCurrentCUDAStream(features.device().index());
     PrRoIPoolingCoorBackwardGpu(
         stream,
-        features.data<float>(), rois.data<float>(), output.data<float>(), output_diff.data<float>(),
-        coor_diff.data<float>(),
+        features.data_ptr<float>(), rois.data_ptr<float>(), output.data_ptr<float>(), output_diff.data_ptr<float>(),
+        coor_diff.data_ptr<float>(),
         nr_channels, height, width, pooled_height, pooled_width, spatial_scale,
         top_count, bottom_count
     );
